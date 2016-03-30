@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwentyOne", "TwentyOne.csproj", "{CBA71FE6-2A8F-46A1-992E-0B3ED4A362C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwentyOneTest", "..\TwentyOneTest\TwentyOneTest.csproj", "{CDED5070-B503-43B2-8279-7C40B3674762}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBA71FE6-2A8F-46A1-992E-0B3ED4A362C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA71FE6-2A8F-46A1-992E-0B3ED4A362C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA71FE6-2A8F-46A1-992E-0B3ED4A362C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA71FE6-2A8F-46A1-992E-0B3ED4A362C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDED5070-B503-43B2-8279-7C40B3674762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDED5070-B503-43B2-8279-7C40B3674762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDED5070-B503-43B2-8279-7C40B3674762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDED5070-B503-43B2-8279-7C40B3674762}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

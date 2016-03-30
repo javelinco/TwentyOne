@@ -1,0 +1,9 @@
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\obj\Debug\TwentyOneTest.csprojResolveAssemblyReference.cache
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\bin\Debug\TwentyOneTest.dll
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\bin\Debug\TwentyOneTest.pdb
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\bin\Debug\nunit.framework.dll
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\bin\Debug\TwentyOne.exe
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\bin\Debug\TwentyOne.pdb
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\bin\Debug\nunit.framework.xml
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\obj\Debug\TwentyOneTest.dll
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOneTest\obj\Debug\TwentyOneTest.pdb

@@ -1,0 +1,6 @@
+c:\users\javelinco.ols\documents\visual studio 2012\Projects\TwentyOne\bin\Debug\TwentyOne.exe.config
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\obj\Debug\TwentyOne.csprojResolveAssemblyReference.cache
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\bin\Debug\TwentyOne.exe
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\bin\Debug\TwentyOne.pdb
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\obj\Debug\TwentyOne.exe
+c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\obj\Debug\TwentyOne.pdb
