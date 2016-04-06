@@ -4,3 +4,9 @@ c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\bin\Debug
 c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\bin\Debug\TwentyOne.pdb
 c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\obj\Debug\TwentyOne.exe
 c:\Users\javelinco.OLS\Documents\Visual Studio 2012\Projects\TwentyOne\obj\Debug\TwentyOne.pdb
+C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe.config
+C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\obj\Debug\TwentyOne.exe
+C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\obj\Debug\TwentyOne.pdb
+C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe
+C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\bin\Debug\TwentyOne.pdb
+C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\obj\Debug\TwentyOne.csprojResolveAssemblyReference.cache

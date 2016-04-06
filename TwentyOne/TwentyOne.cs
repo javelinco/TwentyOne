@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace TwentyOne
 {
+    public enum GameResult
+    {
+        Win,
+        Lose,
+        Tie
+    }
+
     public class TwentyOne
     {
         public const int MAX_VALID_CARD_VALUE = 21;
@@ -24,23 +31,49 @@ namespace TwentyOne
             return cardTotal > MAX_VALID_CARD_VALUE;
         }
 
-        public bool GetRoundResult()
+        private int HandTotal(List<Card> hand)
         {
-            var dealerTotal = DealerHand.Sum(x => x.Value);
-            var playerTotal = PlayerHand.Sum(x => x.Value);
-            return !PlayerBusted()
-                && (playerTotal > dealerTotal
-                || DealerBusted());
+            var initialSum = hand.Sum(x => x.Value);
+
+            var aceExists = hand.Any(x => x.Value == 1);
+            if (!aceExists)
+                return initialSum;
+            else if (initialSum >= 21)
+                return initialSum;
+            else
+                return initialSum + 10;
+        }
+
+        public int PlayerTotal()
+        {
+            return HandTotal(PlayerHand);
+        }
+
+        public int DealerTotal()
+        {
+            return HandTotal(DealerHand);
+        }
+
+        public GameResult GetRoundResult()
+        {
+            if (!PlayerBusted()
+                && (PlayerTotal() > DealerTotal()
+                || DealerBusted()))
+                return GameResult.Win;
+            else if (PlayerTotal() == DealerTotal())
+                return GameResult.Tie;
+            else
+                return GameResult.Lose;
         }
 
         public bool PlayerBusted()
         {
-            return Busted(PlayerHand.Sum(x => x.Value));
+            return Busted(PlayerTotal());
         }
 
         public bool DealerBusted()
         {
-            return Busted(DealerHand.Sum(x => x.Value));
+            return Busted(DealerTotal());
         }
     }
 }

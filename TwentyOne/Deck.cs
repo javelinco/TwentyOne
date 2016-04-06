@@ -48,7 +48,8 @@ namespace TwentyOne
         {
             if (RemainingDeck == null)
                 RemainingDeck = CreateNewDeck();
-            var card = RemainingDeck[_Random.Next(0, RemainingDeck.Count + 1)];
+            var pullCard = _Random.Next(0, RemainingDeck.Count);
+            var card = RemainingDeck[pullCard];
             RemainingDeck.Remove(card);
             return card;
         }

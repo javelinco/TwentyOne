@@ -67,13 +67,65 @@ namespace TwentyOneTest
         }
 
         [Test]
-        public void ShouldLoseIfPlayerLowerThanDealer()
+        public void ShouldTieIfPlayerBlackjackAndDealerBlackjack()
         {
             GivenPlayerCard(1);
-            GivenPlayerCard(1);
-            GivenPlayerCard(1);
+            GivenPlayerCard(10);
+            GivenDealerCard(1);
+            GivenDealerCard(10);
+
+            WhenGetRoundResult();
+
+            ThenTie();
+        }
+
+        [Test]
+        public void ShouldTieIfPlayerHandAndDealerHandAreEqual()
+        {
+            GivenPlayerCard(2);
+            GivenPlayerCard(2);
             GivenDealerCard(2);
             GivenDealerCard(2);
+
+            WhenGetRoundResult();
+
+            ThenTie();
+        }
+
+        [Test]
+        public void ShouldWinIfPlayerBlackjackAndDealerDoesNot()
+        {
+            GivenPlayerCard(1);
+            GivenPlayerCard(10);
+            GivenDealerCard(2);
+            GivenDealerCard(2);
+
+            WhenGetRoundResult();
+
+            ThenWin();
+        }
+
+        [Test]
+        public void ShouldLoseIfDealerBlackjackAndPlayerDoesNot()
+        {
+            GivenDealerCard(1);
+            GivenDealerCard(10);
+            GivenPlayerCard(2);
+            GivenPlayerCard(2);
+
+            WhenGetRoundResult();
+
+            ThenLose();
+        }
+
+        [Test]
+        public void ShouldLoseIfPlayerLowerThanDealer()
+        {
+            GivenPlayerCard(2);
+            GivenPlayerCard(2);
+            GivenPlayerCard(2);
+            GivenDealerCard(5);
+            GivenDealerCard(5);
 
             WhenGetRoundResult();
 
@@ -106,27 +158,31 @@ namespace TwentyOneTest
 
         private void WhenGetRoundResult()
         {
-            _wonRound = _twentyOne.GetRoundResult();
+            _roundResult = _twentyOne.GetRoundResult();
         }
 
         private void ThenLose()
         {
-            Assert.IsFalse(_wonRound);
+            Assert.IsFalse(_roundResult == TwentyOne.GameResult.Lose);
         }
 
         private void ThenWin()
         {
-            Assert.IsTrue(_wonRound);
+            Assert.IsTrue(_roundResult == TwentyOne.GameResult.Win);
+        }
+
+        private void ThenTie()
+        {
+            Assert.IsTrue(_roundResult == TwentyOne.GameResult.Tie);
         }
 
         [SetUp]
         public void SetupTests()
         {
             _twentyOne = new TwentyOne.TwentyOne();
-            _wonRound = false;
         }
 
         private TwentyOne.TwentyOne _twentyOne;
-        private bool _wonRound;
+        private TwentyOne.GameResult _roundResult;
     }
 }
