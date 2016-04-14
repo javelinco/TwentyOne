@@ -8,13 +8,22 @@ namespace TwentyOne
 {
     class Program
     {
-        private static bool PlayerHit()
+        private static string PlayerChoice(List<Card> hand, int handTotal)
         {
-            Console.WriteLine("Do you want to hit or stay? Type 'Y' to hit, 'N' to stay");
-            var key = Console.ReadKey();
-            Console.WriteLine("");
-            return (key.KeyChar == 'Y'
-                || key.KeyChar == 'y');
+            int[] values = { 9, 10, 11 };
+            var key = "";
+            if (hand.Count() == 2
+                || values.Contains(handTotal))
+            {
+                Console.WriteLine("Do you want to hit, double-down, or stay?\n\t'H' to hit\n\t'D' to double-down\n\t'S' to stay");
+                key = Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Do you want to hit or stay?\n\t'H' to hit\n\t'S' to stay");
+                key = Console.ReadLine();
+            }
+            return key;
         }
 
         private static bool DealerHit(int dealerTotal)
@@ -46,11 +55,9 @@ namespace TwentyOne
                 Console.WriteLine("Bummer... Dealer has blackjack :(");
         }
 
-        public static Random random = new Random();
-
         static void Main(string[] args)
         {
-            var gameChips = random.Next(1000,2001);
+            var gameChips = 1000;
             var playAgain = false;
 
             do
@@ -80,15 +87,32 @@ namespace TwentyOne
                 Console.WriteLine("The dealer's visible hand is {0} Total: {1}\n", gamePlay.DealerHand.Skip(1).First().Name, gamePlay.DealerHand.Skip(1).First().Value);
 
                 var playerBust = false;
+                var Choice = "";
                 while (!playerBust
                     && !(gamePlay.PlayerTotal() == 21)
-                    && PlayerHit())
+                    && (Choice != "s" && Choice != "S"))
                 {
-                    gamePlay.PlayerHand.Add(gameDeck.GetCard());
-                    playerBust = gamePlay.PlayerBusted();
-                    if (playerBust)
-                        Console.WriteLine("Your busted!");
-                    PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    Choice = PlayerChoice(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    if (Choice == "H"
+                        || Choice == "h")
+                    {
+                        gamePlay.PlayerHand.Add(gameDeck.GetCard());
+                        playerBust = gamePlay.PlayerBusted();
+                        if (playerBust)
+                            Console.WriteLine("You're busted!");
+                        PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    }
+                    else if (Choice == "D"
+                        || Choice == "d")
+                    {
+                        bet = bet * 2;
+                        gamePlay.PlayerHand.Add(gameDeck.GetCard());
+                        playerBust = gamePlay.PlayerBusted();
+                        if (playerBust)
+                            Console.WriteLine("You're busted!");
+                        PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                        break;
+                    }
                 }
 
                 var dealerBust = false;

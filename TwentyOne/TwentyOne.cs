@@ -8,7 +8,7 @@ namespace TwentyOne
 {
     public enum GameResult
     {
-        Blackjack,
+        BLACKJACK,
         Win,
         Lose,
         Push
@@ -101,7 +101,7 @@ namespace TwentyOne
         {
             if (PlayerBlackjack()
                 && !DealerBlackjack())
-                return GameResult.Blackjack;
+                return GameResult.BLACKJACK;
             else if (!PlayerBusted()
                 && (PlayerTotal() > DealerTotal()
                 || DealerBusted()))
