@@ -29,9 +29,9 @@ namespace TwentyOne
             {
                 handList.AppendFormat("{0},", card.Name);
             }
-            Console.WriteLine("Your hand: {0} Total: {1}\n", handList.ToString().Substring(0, handList.ToString().Length - 1), playerTotal);
-            if (playerTotal == 21)
-                Console.WriteLine("You have blackjack!");
+            Console.WriteLine("Your hand: {0} Total: {1}", handList.ToString().Substring(0, handList.ToString().Length - 1), playerTotal);
+            if (hand.Count() == 2 && playerTotal == 21)
+                Console.WriteLine("BLACKJACK!!!");
         }
 
         private static void DealerHandDisplay(List<Card> hand, int dealerTotal)
@@ -42,8 +42,8 @@ namespace TwentyOne
                 handList.AppendFormat("{0},", card.Name);
             }
             Console.WriteLine("Dealer's hand: {0} Total: {1}\n", handList.ToString().Substring(0, handList.ToString().Length - 1), dealerTotal);
-            if (dealerTotal == 21)
-                Console.WriteLine("Dealer has blackjack! :(");
+            if (hand.Count() == 2 && dealerTotal == 21)
+                Console.WriteLine("Bummer... Dealer has blackjack :(");
         }
 
         public static Random random = new Random();
@@ -61,7 +61,7 @@ namespace TwentyOne
 
                 Console.Clear();
 
-                Console.WriteLine("Your Bankroll is currently: " + gameChips);
+                Console.WriteLine("Your chip count currently is: " + gameChips);
                 do
                 {
                     Console.WriteLine("How much do you want to bet?");
@@ -102,10 +102,19 @@ namespace TwentyOne
                 }
                 DealerHandDisplay(gamePlay.DealerHand, gamePlay.DealerTotal());
 
-                Console.WriteLine(string.Format("You {0}!", gamePlay.GetRoundResult()));
+                if (gamePlay.PlayerBlackjack()
+                    && !gamePlay.DealerBlackjack())
+                    Console.WriteLine(string.Format("You won with a {0}!", gamePlay.GetRoundResult()));
+                else
+                    Console.WriteLine(string.Format("You {0}!", gamePlay.GetRoundResult()));
 
                 switch (gamePlay.GetRoundResult().ToString())
                 {
+                    case "Blackjack":
+                        var blackjackWinnings = Convert.ToInt32(bet * 1.5);
+                        Console.WriteLine("You gained " + blackjackWinnings + " chips!!!");
+                        gameChips = gamePlay.addChips(blackjackWinnings, gameChips);
+                        break;
                     case "Win":
                         Console.WriteLine("You gained " + bet + " chips!!!");
                         gameChips = gamePlay.addChips(bet, gameChips);

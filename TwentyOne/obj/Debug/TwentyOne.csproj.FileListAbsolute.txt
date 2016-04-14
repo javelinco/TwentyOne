@@ -16,3 +16,9 @@ C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\obj\Debug
 C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe
 C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\bin\Debug\TwentyOne.pdb
 C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\obj\Debug\TwentyOne.csprojResolveAssemblyReference.cache
+C:\Users\Mario Vivanco\Documents\GitHub\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe.config
+C:\Users\Mario Vivanco\Documents\GitHub\TwentyOne\TwentyOne\obj\Debug\TwentyOne.exe
+C:\Users\Mario Vivanco\Documents\GitHub\TwentyOne\TwentyOne\obj\Debug\TwentyOne.pdb
+C:\Users\Mario Vivanco\Documents\GitHub\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe
+C:\Users\Mario Vivanco\Documents\GitHub\TwentyOne\TwentyOne\bin\Debug\TwentyOne.pdb
+C:\Users\Mario Vivanco\Documents\GitHub\TwentyOne\TwentyOne\obj\Debug\TwentyOne.csprojResolveAssemblyReference.cache

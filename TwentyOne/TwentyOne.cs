@@ -8,6 +8,7 @@ namespace TwentyOne
 {
     public enum GameResult
     {
+        Blackjack,
         Win,
         Lose,
         Push
@@ -24,6 +25,16 @@ namespace TwentyOne
         {
             DealerHand = new List<Card>();
             PlayerHand = new List<Card>();
+        }
+
+        private bool BlackJack(List<Card> hand)
+        {
+            var value = HandTotal(hand);
+            var blackjack = false;
+
+            if (hand.Count() == 2 && value == 21)
+                blackjack = true;
+            return blackjack;
         }
 
         private bool Busted(int cardTotal)
@@ -54,16 +65,14 @@ namespace TwentyOne
             return HandTotal(DealerHand);
         }
 
-        public GameResult GetRoundResult()
+        public bool PlayerBlackjack()
         {
-            if (!PlayerBusted()
-                && (PlayerTotal() > DealerTotal()
-                || DealerBusted()))
-                return GameResult.Win;
-            else if (PlayerTotal() == DealerTotal())
-                return GameResult.Push;
-            else
-                return GameResult.Lose;
+            return BlackJack(PlayerHand);
+        }
+
+        public bool DealerBlackjack()
+        {
+            return BlackJack(DealerHand);
         }
 
         public bool PlayerBusted()
@@ -86,6 +95,21 @@ namespace TwentyOne
         {
             var total = chips - bet;
             return total;
+        }
+
+        public GameResult GetRoundResult()
+        {
+            if (PlayerBlackjack()
+                && !DealerBlackjack())
+                return GameResult.Blackjack;
+            else if (!PlayerBusted()
+                && (PlayerTotal() > DealerTotal()
+                || DealerBusted()))
+                return GameResult.Win;
+            else if (PlayerTotal() == DealerTotal())
+                return GameResult.Push;
+            else
+                return GameResult.Lose;
         }
     }
 }
