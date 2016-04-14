@@ -19,7 +19,7 @@ namespace TwentyOne
 
         private static bool DealerHit(int dealerTotal)
         {
-            return dealerTotal <= 16;
+            return dealerTotal <= 17;
         }
 
         private static void PlayerHandDisplay(List<Card> hand, int playerTotal)
@@ -29,7 +29,7 @@ namespace TwentyOne
             {
                 handList.AppendFormat("{0},", card.Name);
             }
-            Console.WriteLine("Your hand is {0}: {1}", playerTotal, handList.ToString().Substring(0, handList.ToString().Length - 1));
+            Console.WriteLine("Your hand: {0} Total: {1}\n", handList.ToString().Substring(0, handList.ToString().Length - 1), playerTotal);
             if (playerTotal == 21)
                 Console.WriteLine("You have blackjack!");
         }
@@ -41,21 +41,32 @@ namespace TwentyOne
             {
                 handList.AppendFormat("{0},", card.Name);
             }
-            Console.WriteLine("Dealer's hand is {0}: {1}", dealerTotal, handList.ToString().Substring(0, handList.ToString().Length - 1));
+            Console.WriteLine("Dealer's hand: {0} Total: {1}\n", handList.ToString().Substring(0, handList.ToString().Length - 1), dealerTotal);
             if (dealerTotal == 21)
                 Console.WriteLine("Dealer has blackjack! :(");
         }
 
+        public static Random random = new Random();
+
         static void Main(string[] args)
         {
+            var gameChips = random.Next(1000,2001);
             var playAgain = false;
+
             do
             {
+                var gameDeck = new Deck();
+                var gamePlay = new TwentyOne();
+                var bet = 0;
+
                 Console.Clear();
 
-                var gameDeck = new Deck();
-
-                var gamePlay = new TwentyOne();
+                Console.WriteLine("Your Bankroll is currently: " + gameChips);
+                do
+                {
+                    Console.WriteLine("How much do you want to bet?");
+                    bet = Convert.ToInt32(Console.ReadLine());
+                } while (bet > gameChips);
 
                 gamePlay.PlayerHand.Add(gameDeck.GetCard());
                 gamePlay.PlayerHand.Add(gameDeck.GetCard());
@@ -63,10 +74,10 @@ namespace TwentyOne
                 gamePlay.DealerHand.Add(gameDeck.GetCard());
                 gamePlay.DealerHand.Add(gameDeck.GetCard());
 
-                Console.WriteLine("Welcome to our Casino's Blackjack Table!");
+                Console.WriteLine("Welcome to our Casino's Blackjack Table!\n");
                 PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
 
-                Console.WriteLine("The dealer's visible hand is {0}", gamePlay.DealerHand.Skip(1).First().Name);
+                Console.WriteLine("The dealer's visible hand is {0} Total: {1}\n", gamePlay.DealerHand.Skip(1).First().Name, gamePlay.DealerHand.Skip(1).First().Value);
 
                 var playerBust = false;
                 while (!playerBust
@@ -93,8 +104,34 @@ namespace TwentyOne
 
                 Console.WriteLine(string.Format("You {0}!", gamePlay.GetRoundResult()));
 
-                Console.WriteLine("Play again (Y/N)?");
-                playAgain = Console.ReadKey().Key == ConsoleKey.Y;
+                switch (gamePlay.GetRoundResult().ToString())
+                {
+                    case "Win":
+                        Console.WriteLine("You gained " + bet + " chips!!!");
+                        gameChips = gamePlay.addChips(bet, gameChips);
+                        break;
+                    case "Lose":
+                        Console.WriteLine("You lost " + bet + " chips :(");
+                        gameChips = gamePlay.subtractChips(bet, gameChips);
+                        break;
+                    case "Tie":
+                        Console.WriteLine("Play again (Y/N)?");
+                        break;
+                    default:
+                        break;
+                }
+
+                if (gameChips > 0)
+                {
+                    Console.WriteLine("Play again (Y/N)?");
+                    playAgain = Console.ReadKey().Key == ConsoleKey.Y;
+                }
+                else
+                {
+                    Console.WriteLine("You have lost all of your money, hit the ATM and come back.");
+                    Console.Read();
+                    playAgain = false;
+                }
             } while (playAgain);
         }
     }

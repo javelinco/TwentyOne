@@ -10,7 +10,7 @@ namespace TwentyOne
     {
         Win,
         Lose,
-        Tie
+        Push
     }
 
     public class TwentyOne
@@ -61,7 +61,7 @@ namespace TwentyOne
                 || DealerBusted()))
                 return GameResult.Win;
             else if (PlayerTotal() == DealerTotal())
-                return GameResult.Tie;
+                return GameResult.Push;
             else
                 return GameResult.Lose;
         }
@@ -74,6 +74,18 @@ namespace TwentyOne
         public bool DealerBusted()
         {
             return Busted(DealerTotal());
+        }
+        
+        public int addChips(int bet, int chips)
+        {
+            var total = chips + bet;
+            return total;
+        }
+
+        public int subtractChips(int bet, int chips)
+        {
+            var total = chips - bet;
+            return total;
         }
     }
 }

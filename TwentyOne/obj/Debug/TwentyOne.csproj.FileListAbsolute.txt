@@ -10,3 +10,9 @@ C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne
 C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe
 C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\bin\Debug\TwentyOne.pdb
 C:\Users\javelinco.OLS\Documents\visual studio 2012\Projects\TwentyOne\TwentyOne\obj\Debug\TwentyOne.csprojResolveAssemblyReference.cache
+C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe.config
+C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\obj\Debug\TwentyOne.exe
+C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\obj\Debug\TwentyOne.pdb
+C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\bin\Debug\TwentyOne.exe
+C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\bin\Debug\TwentyOne.pdb
+C:\Users\Mario Vivanco\Documents\UofP\PRG_409\Team\TwentyOne\TwentyOne\obj\Debug\TwentyOne.csprojResolveAssemblyReference.cache
