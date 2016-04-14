@@ -8,12 +8,13 @@ namespace TwentyOne
 {
     class Program
     {
-        private static string PlayerChoice(List<Card> hand, int handTotal)
+        private static string PlayerChoice(List<Card> hand, int handTotal, int bet, int chips)
         {
             int[] values = { 9, 10, 11 };
             var key = "";
-            if (hand.Count() == 2
-                || values.Contains(handTotal))
+            if (bet <= (chips/2)
+                && (hand.Count() == 2
+                || values.Contains(handTotal)))
             {
                 Console.WriteLine("Do you want to hit, double-down, or stay?\n\t'H' to hit\n\t'D' to double-down\n\t'S' to stay");
                 key = Console.ReadLine();
@@ -92,7 +93,7 @@ namespace TwentyOne
                     && !(gamePlay.PlayerTotal() == 21)
                     && (Choice != "s" && Choice != "S"))
                 {
-                    Choice = PlayerChoice(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    Choice = PlayerChoice(gamePlay.PlayerHand, gamePlay.PlayerTotal(), bet, gameChips);
                     if (Choice == "H"
                         || Choice == "h")
                     {
