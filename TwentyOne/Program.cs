@@ -28,7 +28,7 @@ namespace TwentyOne
 
         private static bool DealerHit(int dealerTotal)
         {
-            return dealerTotal <= 17;
+            return dealerTotal <= 16;
         }
 
         private static void PlayerHandDisplay(List<Card> hand, int playerTotal)
