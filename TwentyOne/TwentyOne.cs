@@ -115,7 +115,8 @@ namespace TwentyOne
                 && (PlayerTotal() > DealerTotal()
                 || DealerBusted()))
                 return GameResult.Win;
-            else if (PlayerTotal() == DealerTotal())
+            else if (PlayerTotal() == DealerTotal()
+                || (PlayerBusted() && DealerBusted()))
                 return GameResult.Push;
             else
                 return GameResult.Lose;

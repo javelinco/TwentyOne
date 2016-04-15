@@ -72,7 +72,9 @@ namespace TwentyOne
                 do
                 {
                     Console.WriteLine("How much do you want to bet?");
-                    bet = Convert.ToInt32(Console.ReadLine());
+                    var input = Console.ReadLine();
+                    var validation = String.IsNullOrWhiteSpace(input) ? "0" : input;
+                    bet = Convert.ToInt32(validation);
                 } while (bet > gameChips);
 
                 gamePlay.PlayerHand.Add(gameDeck.GetCard());
@@ -84,11 +86,32 @@ namespace TwentyOne
                 Console.WriteLine("Welcome to our Casino's Blackjack Table!\n");
                 PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
 
-                Console.WriteLine("The dealer's visible hand is {0} Total: {1}\n", gamePlay.DealerHand.Skip(1).First().Name, gamePlay.DealerVisibleHand(gamePlay.DealerHand.Skip(1).First().Value));
+                var DealerFaceUpCardValue = gamePlay.DealerVisibleHand(gamePlay.DealerHand.Skip(1).First().Value);
+
+                Console.WriteLine("The dealer's visible hand is {0} Total: {1}\n", gamePlay.DealerHand.Skip(1).First().Name, DealerFaceUpCardValue);
+
+                if (DealerFaceUpCardValue == 11)
+                {
+                    Console.WriteLine("Do you want insurance? [Y/N]");
+                    var insurance = Console.ReadKey().Key == ConsoleKey.Y;
+                    var insuranceBet = Convert.ToInt32(bet / 2);
+
+                    if (insurance && gamePlay.DealerBlackjack())
+                    {
+                        Console.WriteLine("Insurance bet won, gain {0} chips.", insuranceBet);
+                        gameChips = gameChips + insuranceBet;
+                    }
+                    else if (insurance && !gamePlay.DealerBlackjack())
+                    {
+                        Console.WriteLine("Insurance bet lost, lose {0} chips.", insuranceBet);
+                        gameChips = gameChips - insuranceBet;
+                    }
+                }
 
                 var playerBust = false;
                 var Choice = "";
                 while (!playerBust
+                    && !(gamePlay.DealerBlackjack())
                     && !(gamePlay.PlayerTotal() == 21)
                     && (Choice != "s" && Choice != "S"))
                 {
@@ -151,16 +174,13 @@ namespace TwentyOne
                         Console.WriteLine("You lost " + bet + " chips :(");
                         gameChips = gamePlay.subtractChips(bet, gameChips);
                         break;
-                    case "Tie":
-                        Console.WriteLine("Play again (Y/N)?");
-                        break;
                     default:
                         break;
                 }
 
                 if (gameChips > 0)
                 {
-                    Console.WriteLine("Play again (Y/N)?");
+                    Console.WriteLine("Play again? [Y/N]");
                     playAgain = Console.ReadKey().Key == ConsoleKey.Y;
                 }
                 else
