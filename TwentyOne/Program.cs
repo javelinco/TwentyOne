@@ -15,12 +15,12 @@ namespace TwentyOne
                 && (hand.Count() == 2
                 || values.Contains(handTotal)))
             {
-                Console.WriteLine("Do you want to hit, double-down, or stay?\n\t'H' to hit\n\t'D' to double-down\n\t'S' to stay");
+                Console.WriteLine("\nDo you want to hit, double-down, or stay?\n\t'H' to hit\n\t'D' to double-down\n\t'S' to stay");
                 key = Console.ReadLine();
             }
             else
             {
-                Console.WriteLine("Do you want to hit or stay?\n\t'H' to hit\n\t'S' to stay");
+                Console.WriteLine("\nDo you want to hit or stay?\n\t'H' to hit\n\t'S' to stay");
                 key = Console.ReadLine();
             }
             return key;
@@ -88,7 +88,7 @@ namespace TwentyOne
 
                 var DealerFaceUpCardValue = gamePlay.DealerVisibleHand(gamePlay.DealerHand.Skip(1).First().Value);
 
-                Console.WriteLine("The dealer's visible hand is {0} Total: {1}\n", gamePlay.DealerHand.Skip(1).First().Name, DealerFaceUpCardValue);
+                Console.WriteLine("The dealer's visible hand is {0} Total: {1}", gamePlay.DealerHand.Skip(1).First().Name, DealerFaceUpCardValue);
 
                 if (DealerFaceUpCardValue == 11)
                 {
@@ -98,12 +98,12 @@ namespace TwentyOne
 
                     if (insurance && gamePlay.DealerBlackjack())
                     {
-                        Console.WriteLine("Insurance bet won, gain {0} chips.", insuranceBet);
+                        Console.WriteLine("\nInsurance bet won, gain {0} chips.", insuranceBet);
                         gameChips = gameChips + insuranceBet;
                     }
                     else if (insurance && !gamePlay.DealerBlackjack())
                     {
-                        Console.WriteLine("Insurance bet lost, lose {0} chips.", insuranceBet);
+                        Console.WriteLine("\nInsurance bet lost, lose {0} chips.", insuranceBet);
                         gameChips = gameChips - insuranceBet;
                     }
                 }
@@ -122,7 +122,7 @@ namespace TwentyOne
                         gamePlay.PlayerHand.Add(gameDeck.GetCard());
                         playerBust = gamePlay.PlayerBusted();
                         if (playerBust)
-                            Console.WriteLine("You're busted!");
+                            Console.WriteLine("\nYou're busted!");
                         PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
                     }
                     else if (Choice == "D"
@@ -132,7 +132,7 @@ namespace TwentyOne
                         gamePlay.PlayerHand.Add(gameDeck.GetCard());
                         playerBust = gamePlay.PlayerBusted();
                         if (playerBust)
-                            Console.WriteLine("You're busted!");
+                            Console.WriteLine("\nYou're busted!");
                         PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
                         break;
                     }
@@ -149,7 +149,7 @@ namespace TwentyOne
                     gamePlay.DealerHand.Add(gameDeck.GetCard());
                     dealerBust = gamePlay.DealerBusted();
                     if (dealerBust)
-                        Console.WriteLine("Dealer busted!");
+                        Console.WriteLine("\nDealer busted!");
                 }
                 DealerHandDisplay(gamePlay.DealerHand, gamePlay.DealerTotal());
 
