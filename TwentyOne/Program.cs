@@ -2,19 +2,28 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TwentyOne
 {
     class Program
     {
-        private static bool PlayerHit()
+        private static string PlayerChoice(List<Card> hand, int handTotal, int bet, int chips)
         {
-            Console.WriteLine("Do you want to hit or stay? Type 'Y' to hit, 'N' to stay");
-            var key = Console.ReadKey();
-            Console.WriteLine("");
-            return (key.KeyChar == 'Y'
-                || key.KeyChar == 'y');
+            int[] values = { 9, 10, 11 };
+            var key = "";
+            if (bet <= (chips/2)
+                && (hand.Count() == 2
+                || values.Contains(handTotal)))
+            {
+                Console.WriteLine("\nDo you want to hit, double-down, or stay?\n\t'H' to hit\n\t'D' to double-down\n\t'S' to stay");
+                key = Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("\nDo you want to hit or stay?\n\t'H' to hit\n\t'S' to stay");
+                key = Console.ReadLine();
+            }
+            return key;
         }
 
         private static bool DealerHit(int dealerTotal)
@@ -29,9 +38,9 @@ namespace TwentyOne
             {
                 handList.AppendFormat("{0},", card.Name);
             }
-            Console.WriteLine("Your hand is {0}: {1}", playerTotal, handList.ToString().Substring(0, handList.ToString().Length - 1));
-            if (playerTotal == 21)
-                Console.WriteLine("You have blackjack!");
+            Console.WriteLine("Your hand: {0} Total: {1}", handList.ToString().Substring(0, handList.ToString().Length - 1), playerTotal);
+            if (hand.Count() == 2 && playerTotal == 21)
+                Console.WriteLine("BLACKJACK!!!");
         }
 
         private static void DealerHandDisplay(List<Card> hand, int dealerTotal)
@@ -41,21 +50,32 @@ namespace TwentyOne
             {
                 handList.AppendFormat("{0},", card.Name);
             }
-            Console.WriteLine("Dealer's hand is {0}: {1}", dealerTotal, handList.ToString().Substring(0, handList.ToString().Length - 1));
-            if (dealerTotal == 21)
-                Console.WriteLine("Dealer has blackjack! :(");
+            Console.WriteLine("Dealer's hand: {0} Total: {1}\n", handList.ToString().Substring(0, handList.ToString().Length - 1), dealerTotal);
+            if (hand.Count() == 2 && dealerTotal == 21)
+                Console.WriteLine("Bummer... Dealer has blackjack :(");
         }
 
         static void Main(string[] args)
         {
+            var gameChips = 1000;
             var playAgain = false;
+
             do
             {
+                var gameDeck = new Deck();
+                var gamePlay = new TwentyOne();
+                var bet = 0;
+
                 Console.Clear();
 
-                var gameDeck = new Deck();
-
-                var gamePlay = new TwentyOne();
+                Console.WriteLine("Your chip count currently is: " + gameChips);
+                do
+                {
+                    Console.WriteLine("How much do you want to bet?");
+                    var input = Console.ReadLine();
+                    var validation = String.IsNullOrWhiteSpace(input) ? "0" : input;
+                    bet = Convert.ToInt32(validation);
+                } while (bet > gameChips);
 
                 gamePlay.PlayerHand.Add(gameDeck.GetCard());
                 gamePlay.PlayerHand.Add(gameDeck.GetCard());
@@ -63,21 +83,63 @@ namespace TwentyOne
                 gamePlay.DealerHand.Add(gameDeck.GetCard());
                 gamePlay.DealerHand.Add(gameDeck.GetCard());
 
-                Console.WriteLine("Welcome to our Casino's Blackjack Table!");
+                Console.WriteLine("Welcome to our Casino's Blackjack Table!\n");
                 PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
 
-                Console.WriteLine("The dealer's visible hand is {0}", gamePlay.DealerHand.Skip(1).First().Name);
+                var DealerFaceUpCardValue = gamePlay.DealerVisibleHand(gamePlay.DealerHand.Skip(1).First().Value);
+
+                Console.WriteLine("The dealer's visible hand is {0} Total: {1}", gamePlay.DealerHand.Skip(1).First().Name, DealerFaceUpCardValue);
+
+                if (DealerFaceUpCardValue == 11)
+                {
+                    Console.WriteLine("Do you want insurance? [Y/N]");
+                    var insurance = Console.ReadKey().Key == ConsoleKey.Y;
+                    var insuranceBet = Convert.ToInt32(bet / 2);
+
+                    if (insurance && gamePlay.DealerBlackjack())
+                    {
+                        Console.WriteLine("\nInsurance bet won, gain {0} chips.", insuranceBet);
+                        gameChips = gameChips + insuranceBet;
+                    }
+                    else if (insurance && !gamePlay.DealerBlackjack())
+                    {
+                        Console.WriteLine("\nInsurance bet lost, lose {0} chips.", insuranceBet);
+                        gameChips = gameChips - insuranceBet;
+                    }
+                }
 
                 var playerBust = false;
+                var Choice = "";
                 while (!playerBust
+                    && !(gamePlay.DealerBlackjack())
                     && !(gamePlay.PlayerTotal() == 21)
-                    && PlayerHit())
+                    && (Choice != "s" && Choice != "S"))
                 {
-                    gamePlay.PlayerHand.Add(gameDeck.GetCard());
-                    playerBust = gamePlay.PlayerBusted();
-                    if (playerBust)
-                        Console.WriteLine("Your busted!");
-                    PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    Choice = PlayerChoice(gamePlay.PlayerHand, gamePlay.PlayerTotal(), bet, gameChips);
+                    if (Choice == "H"
+                        || Choice == "h")
+                    {
+                        gamePlay.PlayerHand.Add(gameDeck.GetCard());
+                        playerBust = gamePlay.PlayerBusted();
+                        if (playerBust)
+                            Console.WriteLine("\nYou're busted!");
+                        PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    }
+                    else if (Choice == "D"
+                        || Choice == "d")
+                    {
+                        bet = bet * 2;
+                        gamePlay.PlayerHand.Add(gameDeck.GetCard());
+                        playerBust = gamePlay.PlayerBusted();
+                        if (playerBust)
+                            Console.WriteLine("\nYou're busted!");
+                        PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                        break;
+                    }
+                    else
+                    {
+                        PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    }
                 }
 
                 var dealerBust = false;
@@ -87,14 +149,46 @@ namespace TwentyOne
                     gamePlay.DealerHand.Add(gameDeck.GetCard());
                     dealerBust = gamePlay.DealerBusted();
                     if (dealerBust)
-                        Console.WriteLine("Dealer busted!");
+                        Console.WriteLine("\nDealer busted!");
                 }
                 DealerHandDisplay(gamePlay.DealerHand, gamePlay.DealerTotal());
 
-                Console.WriteLine(string.Format("You {0}!", gamePlay.GetRoundResult()));
+                if (gamePlay.PlayerBlackjack()
+                    && !gamePlay.DealerBlackjack())
+                    Console.WriteLine(string.Format("You won with a {0}!", gamePlay.GetRoundResult()));
+                else
+                    Console.WriteLine(string.Format("You {0}!", gamePlay.GetRoundResult()));
 
-                Console.WriteLine("Play again (Y/N)?");
-                playAgain = Console.ReadKey().Key == ConsoleKey.Y;
+                switch (gamePlay.GetRoundResult().ToString())
+                {
+                    case "BLACKJACK":
+                        var blackjackWinnings = Convert.ToInt32(bet * 1.5);
+                        Console.WriteLine("You gained " + blackjackWinnings + " chips!!!");
+                        gameChips = gamePlay.addChips(blackjackWinnings, gameChips);
+                        break;
+                    case "Win":
+                        Console.WriteLine("You gained " + bet + " chips!!!");
+                        gameChips = gamePlay.addChips(bet, gameChips);
+                        break;
+                    case "Lose":
+                        Console.WriteLine("You lost " + bet + " chips :(");
+                        gameChips = gamePlay.subtractChips(bet, gameChips);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (gameChips > 0)
+                {
+                    Console.WriteLine("Play again? [Y/N]");
+                    playAgain = Console.ReadKey().Key == ConsoleKey.Y;
+                }
+                else
+                {
+                    Console.WriteLine("You have lost all of your money, hit the ATM and come back.");
+                    Console.Read();
+                    playAgain = false;
+                }
             } while (playAgain);
         }
     }

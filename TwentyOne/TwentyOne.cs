@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TwentyOne
 {
     public enum GameResult
     {
+        BLACKJACK,
         Win,
         Lose,
-        Tie
+        Push
     }
 
     public class TwentyOne
@@ -26,6 +24,16 @@ namespace TwentyOne
             PlayerHand = new List<Card>();
         }
 
+        private bool BlackJack(List<Card> hand)
+        {
+            var value = HandTotal(hand);
+            var blackjack = false;
+
+            if (hand.Count() == 2 && value == MAX_VALID_CARD_VALUE)
+                blackjack = true;
+            return blackjack;
+        }
+
         private bool Busted(int cardTotal)
         {
             return cardTotal > MAX_VALID_CARD_VALUE;
@@ -34,14 +42,26 @@ namespace TwentyOne
         private int HandTotal(List<Card> hand)
         {
             var initialSum = hand.Sum(x => x.Value);
-
             var aceExists = hand.Any(x => x.Value == 1);
+
             if (!aceExists)
                 return initialSum;
-            else if (initialSum >= 21)
+            else if (initialSum >= MAX_VALID_CARD_VALUE)
                 return initialSum;
             else
-                return initialSum + 10;
+            {
+                initialSum = initialSum + 10;
+                if (initialSum > MAX_VALID_CARD_VALUE)
+                    initialSum = initialSum - 10;
+                return initialSum;
+            }
+        }
+
+        public int DealerVisibleHand(int value)
+        {
+            if (value == 1)
+                value = value + 10;
+            return value;
         }
 
         public int PlayerTotal()
@@ -54,16 +74,14 @@ namespace TwentyOne
             return HandTotal(DealerHand);
         }
 
-        public GameResult GetRoundResult()
+        public bool PlayerBlackjack()
         {
-            if (!PlayerBusted()
-                && (PlayerTotal() > DealerTotal()
-                || DealerBusted()))
-                return GameResult.Win;
-            else if (PlayerTotal() == DealerTotal())
-                return GameResult.Tie;
-            else
-                return GameResult.Lose;
+            return BlackJack(PlayerHand);
+        }
+
+        public bool DealerBlackjack()
+        {
+            return BlackJack(DealerHand);
         }
 
         public bool PlayerBusted()
@@ -74,6 +92,34 @@ namespace TwentyOne
         public bool DealerBusted()
         {
             return Busted(DealerTotal());
+        }
+        
+        public int addChips(int bet, int chips)
+        {
+            var total = chips + bet;
+            return total;
+        }
+
+        public int subtractChips(int bet, int chips)
+        {
+            var total = chips - bet;
+            return total;
+        }
+
+        public GameResult GetRoundResult()
+        {
+            if (PlayerBlackjack()
+                && !DealerBlackjack())
+                return GameResult.BLACKJACK;
+            else if (!PlayerBusted()
+                && (PlayerTotal() > DealerTotal()
+                || DealerBusted()))
+                return GameResult.Win;
+            else if (PlayerTotal() == DealerTotal()
+                || (PlayerBusted() && DealerBusted()))
+                return GameResult.Push;
+            else
+                return GameResult.Lose;
         }
     }
 }
