@@ -29,7 +29,7 @@ namespace TwentyOne
             var value = HandTotal(hand);
             var blackjack = false;
 
-            if (hand.Count() == 2 && value == 21)
+            if (hand.Count() == 2 && value == MAX_VALID_CARD_VALUE)
                 blackjack = true;
             return blackjack;
         }
@@ -42,14 +42,26 @@ namespace TwentyOne
         private int HandTotal(List<Card> hand)
         {
             var initialSum = hand.Sum(x => x.Value);
-
             var aceExists = hand.Any(x => x.Value == 1);
+
             if (!aceExists)
                 return initialSum;
-            else if (initialSum >= 21)
+            else if (initialSum >= MAX_VALID_CARD_VALUE)
                 return initialSum;
             else
-                return initialSum + 10;
+            {
+                initialSum = initialSum + 10;
+                if (initialSum > MAX_VALID_CARD_VALUE)
+                    initialSum = initialSum - 10;
+                return initialSum;
+            }
+        }
+
+        public int DealerVisibleHand(int value)
+        {
+            if (value == 1)
+                value = value + 10;
+            return value;
         }
 
         public int PlayerTotal()

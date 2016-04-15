@@ -84,7 +84,7 @@ namespace TwentyOne
                 Console.WriteLine("Welcome to our Casino's Blackjack Table!\n");
                 PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
 
-                Console.WriteLine("The dealer's visible hand is {0} Total: {1}\n", gamePlay.DealerHand.Skip(1).First().Name, gamePlay.DealerHand.Skip(1).First().Value);
+                Console.WriteLine("The dealer's visible hand is {0} Total: {1}\n", gamePlay.DealerHand.Skip(1).First().Name, gamePlay.DealerVisibleHand(gamePlay.DealerHand.Skip(1).First().Value));
 
                 var playerBust = false;
                 var Choice = "";
@@ -113,6 +113,10 @@ namespace TwentyOne
                         PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
                         break;
                     }
+                    else
+                    {
+                        PlayerHandDisplay(gamePlay.PlayerHand, gamePlay.PlayerTotal());
+                    }
                 }
 
                 var dealerBust = false;
@@ -134,7 +138,7 @@ namespace TwentyOne
 
                 switch (gamePlay.GetRoundResult().ToString())
                 {
-                    case "Blackjack":
+                    case "BLACKJACK":
                         var blackjackWinnings = Convert.ToInt32(bet * 1.5);
                         Console.WriteLine("You gained " + blackjackWinnings + " chips!!!");
                         gameChips = gamePlay.addChips(blackjackWinnings, gameChips);
